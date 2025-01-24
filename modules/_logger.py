@@ -4,10 +4,10 @@ import datetime
 colorama.init(autoreset=True)
 
 FR = colorama.Fore.RESET
-FC = colorama.Fore.CYAN
-FRE = colorama.Fore.RED
+FCEX = colorama.Fore.LIGHTCYAN_EX
+FREX = colorama.Fore.LIGHTRED_EX
 
 Logger = type("lo", (object, ), {
-	"stdout": lambda log: print(f"{FC}[{datetime.datetime.now().strftime('%H:%M:%S')}]{FR} - {log}"),
-	"stderr": lambda err: print(f"{FRE}[{datetime.datetime.now().strftime('%H:%M:%S')}]{FR} - {err}")
+	"stdout": lambda log: print(f"{FCEX}[{datetime.datetime.now().strftime('%H:%M:%S')}]{FR} - {log}"),
+	"stderr": lambda err: print(f"{FREX}[{datetime.datetime.now().strftime('%H:%M:%S')}]{FR} - {err}"),
 })

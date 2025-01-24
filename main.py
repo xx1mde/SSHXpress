@@ -1,12 +1,8 @@
 import subprocess, sys, json, os, copy
 
-from pygments import highlight
-from pygments.lexers import JsonLexer
-from pygments.formatters import Terminal256Formatter
-
 os.makedirs(os.path.abspath(f"{os.path.dirname(sys.argv[0])}/config/"), exist_ok=True)
 
-from modules import Parser, Logger, Config
+from modules import Parser, Logger, Config, BeautyDict
 from objects import ParserValues
 
 class MainCore(object):
@@ -36,7 +32,9 @@ class MainCore(object):
 			Config.newConfig(self.__PATH)
 			Logger.stdout("New config created.")
 
-	def list(self): print(highlight(json.dumps(self._DESEREALIZED_CONFIG, indent=4), JsonLexer(), Terminal256Formatter(style="lightbulb")))
+	def list(self):
+		BeautyDict.print(self._DESEREALIZED_CONFIG)
+		#print(highlight(json.dumps(self._DESEREALIZED_CONFIG, indent=4), JsonLexer(), Terminal256Formatter(style="lightbulb")))
 
 	def add(self):
 		self.commandObjectDeepCopy = copy.deepcopy(self.commandObject.__dict__)
