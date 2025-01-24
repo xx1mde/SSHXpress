@@ -9,7 +9,7 @@ class Parser(object):
 	@staticmethod
 	def parse(_commandLineArgs: list, _parserValues: dict) -> None:
 
-		localParser = argparse.ArgumentParser(exit_on_error=False)
+		localParser = argparse.ArgumentParser(exit_on_error=False, add_help=False)
 		localParser.error = lambda _err: (
 			print(f"{colorama.Fore.RED}{_err} {set(_parserValues.keys())}."),
 			sys.exit(0)
@@ -21,7 +21,8 @@ class Parser(object):
 			tuple(_parserValues.keys()),
 			("Connect to ssh server", "Add new ssh configuration", "Remove ssh configuration", "Display available ssh configs")
 		):
-			_subparser = subparsers.add_parser(parserName, help=parserInfo)
+			_subparser = subparsers.add_parser(parserName, help=parserInfo, add_help=False)
+			_subparser.add_argument("--help", action="help", default=argparse.SUPPRESS, help="Assistance on arguments")
 
 			_subparser.error = lambda _err: (
 				print(f"{colorama.Fore.RED}{_err}. Try -h (--help)"),

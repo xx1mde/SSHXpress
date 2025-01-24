@@ -41,24 +41,23 @@ class MainCore(object):
 	def add(self):
 		self.commandObjectDeepCopy = copy.deepcopy(self.commandObject.__dict__)
 		del self.commandObjectDeepCopy["command"]
-		del self.commandObjectDeepCopy["confname"]
+		del self.commandObjectDeepCopy["alias"]
 
-		self._DESEREALIZED_CONFIG[self.commandObject.confname] = self.commandObjectDeepCopy
+		self._DESEREALIZED_CONFIG[self.commandObject.alias] = self.commandObjectDeepCopy
 		Config.rewriteConfig(self.__PATH, self._DESEREALIZED_CONFIG)
 
 	def remove(self):
-		del self._DESEREALIZED_CONFIG[self.commandObject.confname]
+		del self._DESEREALIZED_CONFIG[self.commandObject.alias]
 		Config.rewriteConfig(self.__PATH, self._DESEREALIZED_CONFIG)
 
 	def connect(self):
-		_localConfigObject = self._DESEREALIZED_CONFIG[self.commandObject.confname]
+		_localConfigObject = self._DESEREALIZED_CONFIG[self.commandObject.alias]
 		_sshRequest = (
 			f"ssh "
-			f"{_localConfigObject['username']+'@' if _localConfigObject['username'] != None else ''}"
+			f"{_localConfigObject['user']+'@' if _localConfigObject['user'] != None else ''}"
 			f"{_localConfigObject['host']}"
 			f"{(' -p ' + str(_localConfigObject['port'])) if _localConfigObject['port'] != None else ''}"
 		)
 		subprocess.run(_sshRequest, shell=True)
 
 if __name__ == "__main__": MainCore()
-#subprocess.run("ssh -t 192.168.0.104 -p 8022", shell=True)
